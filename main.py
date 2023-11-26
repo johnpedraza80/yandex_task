@@ -102,8 +102,6 @@ class Coffee(QMainWindow):
                     i, j, QTableWidgetItem(str(elem)))
 
 
-
-
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = Coffee()
