@@ -1,7 +1,8 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QTableWidget
+from PyQt5.QtWidgets import QMainWindow, QApplication, QTableWidgetItem
 import io
 from PyQt5 import uic
+import sqlite3
 
 template = """<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
@@ -88,6 +89,19 @@ class Coffee(QMainWindow):
         super(Coffee, self).__init__()
         self.f = io.StringIO(template)
         uic.loadUi(self.f, self)
+        self.open_table()
+
+    def open_table(self):
+        con = sqlite3.connect("coffee.sqlite")
+        cur = con.cursor()
+        data = cur.execute("SELECT * FROM coffe_info").fetchall()
+        self.tableWidget.setRowCount(len(data))
+        for i, row in enumerate(data):
+            for j, elem in enumerate(row):
+                self.tableWidget.setItem(
+                    i, j, QTableWidgetItem(str(elem)))
+
+
 
 
 if __name__ == '__main__':
